@@ -6,6 +6,31 @@ This repository is designed as a GitHub-ready portfolio and research workflow. L
 
 ---
 
+
+# Key Findings
+
+• Integrated 72 breast tissue single-cell transcriptomic samples into a unified atlas.
+
+• Identified major cellular populations including epithelial cells, fibroblasts, endothelial cells, macrophages, T cells, NK cells, B cells and plasma cells.
+
+• Constructed a high-confidence epithelial-cell atlas through iterative filtering and reclustering.
+
+• Discovered multiple epithelial tumor states enriched in Normal, ER+, HER2+ and TNBC samples.
+
+• TNBC-associated epithelial states exhibited the strongest transcriptional divergence from normal epithelial populations.
+
+• HER2-associated states demonstrated enrichment of proliferation-related gene programs.
+
+• ER-associated states showed enrichment of hormone-response and luminal epithelial signatures.
+
+• Performed extensive pairwise differential expression analyses between tumor states.
+
+• Identified state-specific marker genes defining biologically distinct epithelial populations.
+
+• Validated tumor states using pathway enrichment and marker-gene analyses.
+
+• Generated publication-style visualizations including UMAPs, state composition plots and marker bubble plots.
+
 ## Dataset
 
 Primary dataset:
