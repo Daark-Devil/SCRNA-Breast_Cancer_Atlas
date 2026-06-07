@@ -1,0 +1,14 @@
+Raw scRNA-seq matrices
+→ sample metadata construction
+→ QC filtering
+→ doublet detection
+→ normalization and clustering
+→ marker-based cell annotation
+→ cell-type composition statistics
+→ Harmony integrated atlas
+→ epithelial extraction
+→ epithelial subclustering
+→ subtype-enriched state discovery
+→ raw-expression state-vs-state differential expression
+→ marker/signature visualization
+→ biological validation figures

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>scRNA Breast Cancer Atlas — Repository Structure</title>
+<style>
+  :root{
+    --ink:#1f2733; --muted:#5b6573;
+    --shell-bg:#f3f0ea; --shell-bd:#d8d0c2;
+    --blue-bg:#e8f0fb;   --blue-bd:#bcd2ee;   --blue-tx:#2b5b9e;
+    --orange-bg:#fdf1e3; --orange-bd:#f0d2a6; --orange-tx:#b5742a;
+    --green-bg:#e9f5e9;  --green-bd:#c1e0c1;  --green-tx:#2e7d3a;
+    --purple-bg:#eeebfb; --purple-bd:#cfc6ef; --purple-tx:#5b4ba8;
+    --teal-bg:#e6f4f1;   --teal-bd:#b0dcd2;   --teal-tx:#1f7a6b;
+    --red-bg:#fbecea;    --red-bd:#f0c6bd;    --red-tx:#b5453a;
+    --neutral-bg:#eceae6;--neutral-bd:#d2cdc4; --neutral-tx:#4a4233;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:#ffffff;
+    font-family:"Segoe UI","Aptos",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    color:var(--ink);
+    padding:40px;
+    display:flex;justify-content:center;
+  }
+  .shell{
+    width:660px;background:var(--shell-bg);border:1px solid var(--shell-bd);
+    border-radius:14px;padding:20px;
+  }
+  .shell-h{font-size:16px;font-weight:700;margin-bottom:2px}
+  .shell-s{font-size:12.5px;color:var(--muted);margin-bottom:16px}
+
+  .card{border-radius:10px;border:1px solid;padding:11px 14px;margin-bottom:12px}
+  .card:last-child{margin-bottom:0}
+  .card .ct{font-size:14px;font-weight:700;margin-bottom:5px}
+  .card .cl{font-size:12.5px;line-height:1.55;color:#3c4655}
+  .card .cl span{color:var(--muted)}
+
+  .blue{background:var(--blue-bg);border-color:var(--blue-bd)} .blue .ct{color:var(--blue-tx)}
+  .orange{background:var(--orange-bg);border-color:var(--orange-bd)} .orange .ct{color:var(--orange-tx)}
+  .green{background:var(--green-bg);border-color:var(--green-bd)} .green .ct{color:var(--green-tx)}
+  .purple{background:var(--purple-bg);border-color:var(--purple-bd)} .purple .ct{color:var(--purple-tx)}
+  .teal{background:var(--teal-bg);border-color:var(--teal-bd)} .teal .ct{color:var(--teal-tx)}
+  .red{background:var(--red-bg);border-color:var(--red-bd)} .red .ct{color:var(--red-tx)}
+  .neutral{background:var(--neutral-bg);border-color:var(--neutral-bd)} .neutral .ct{color:var(--neutral-tx)}
+
+  .nest{margin-top:9px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .sub{background:rgba(255,255,255,.6);border:1px solid var(--green-bd);border-radius:8px;padding:7px 10px}
+  .sub .st{font-size:12.5px;font-weight:700;color:var(--green-tx)}
+  .sub .sd{font-size:11.5px;color:var(--muted);margin-top:1px;line-height:1.4}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="shell-h">scRNA_BreastCancer_Atlas/</div>
+  <div class="shell-s">root repository · README, LICENSE · single-sample breast cancer scRNA-seq atlas</div>
+
+  <div class="card blue">
+    <div class="ct">docs/ — project documentation</div>
+    <div class="cl">Project workflow writeup · dataset information (GSE161529)<br><span>methods, pipeline parameters, tool versions</span></div>
+  </div>
+
+  <div class="card orange">
+    <div class="ct">scripts/ — analysis pipeline</div>
+    <div class="cl">QC · integration · clustering · annotation<br>DE analysis · biological validation<br><span>step-by-step Scanpy / Scrublet / BBKNN scripts</span></div>
+  </div>
+
+  <div class="card purple">
+    <div class="ct">metadata/ &nbsp;·&nbsp; reference/</div>
+    <div class="cl">metadata/: sample metadata · clinical labels<br>reference/: reference resources · marker gene sets</div>
+  </div>
+
+  <div class="card teal">
+    <div class="ct">main_figures/ &nbsp;·&nbsp; supporting_figures/</div>
+    <div class="cl">main_figures/: publication figures · main biological findings<br>supporting_figures/: additional validation figures</div>
+  </div>
+
+  <div class="card green">
+    <div class="ct">results/ — outputs by analysis stage</div>
+    <div class="cl"><span>per-stage processed objects, tables, and validation outputs</span></div>
+    <div class="nest">
+      <div class="sub"><div class="st">integrated_atlas/</div><div class="sd">Full cell atlas outputs</div></div>
+      <div class="sub"><div class="st">epithelial_clean/</div><div class="sd">Refined epithelial cells</div></div>
+      <div class="sub"><div class="st">epithelial_subcluster/</div><div class="sd">Tumor state clustering</div></div>
+      <div class="sub"><div class="st">epithelial_final/</div><div class="sd">Final epithelial states</div></div>
+      <div class="sub"><div class="st">epithelial_full_pairwise_DE/</div><div class="sd">Differential expression</div></div>
+      <div class="sub"><div class="st">biological_validation/</div><div class="sd">State validation · pathway analysis</div></div>
+      <div class="sub"><div class="st">marker_validation/</div><div class="sd">Marker confirmation</div></div>
+      <div class="sub"><div class="st">GSM*/</div><div class="sd">Per-sample outputs</div></div>
+      <div class="sub"><div class="st">tables/</div><div class="sd">Cohort summaries</div></div>
+    </div>
+  </div>
+
+  <div class="card neutral">
+    <div class="ct">README.md</div>
+    <div class="cl">Overview · dataset · how to run the pipeline · key findings</div>
+  </div>
+
+</div>
+</body>
+</html>

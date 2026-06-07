@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>scRNA Breast Cancer Atlas — Workflow</title>
+<style>
+  :root{
+    --ink:#1f2733; --muted:#5b6573; --line:#9aa3af;
+    --neutral-bg:#efeae3; --neutral-bd:#cdc4b6; --neutral-tx:#4a4233;
+    --blue-bg:#e8f0fb;   --blue-bd:#b9d0ee;   --blue-tx:#2b5b9e;
+    --teal-bg:#e6f4f1;   --teal-bd:#aedcd2;   --teal-tx:#1f7a6b;
+    --purple-bg:#eeebfb; --purple-bd:#cdc4ef; --purple-tx:#5b4ba8;
+    --green-bg:#e9f5e9;  --green-bd:#bfe0bf;  --green-tx:#2e7d3a;
+    --red-bg:#fbecea;    --red-bd:#f0c4bd;    --red-tx:#b5453a;
+    --orange-bg:#fdf1e3; --orange-bd:#f3d4a6; --orange-tx:#b5742a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:#ffffff;
+    font-family:"Segoe UI","Aptos",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    color:var(--ink);
+    padding:44px 56px;
+  }
+  .canvas{max-width:920px;margin:0 auto}
+  h1{font-size:20px;font-weight:700;margin-bottom:4px}
+  .sub{font-size:13px;color:var(--muted);margin-bottom:34px}
+
+  .row{display:grid;grid-template-columns:185px 1fr;align-items:start;}
+  .stage{font-size:14px;font-weight:700;color:var(--ink);padding-top:14px}
+  .cell{position:relative}
+
+  .box{
+    border-radius:11px;border:1px solid;padding:13px 17px;
+    width:430px;
+  }
+  .box .t{font-size:15px;font-weight:700;line-height:1.25}
+  .box .d{font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.4}
+  .box .tool{font-size:12.5px;font-weight:600;margin-top:4px}
+  .box .found{
+    font-size:12px;margin-top:7px;padding-top:7px;border-top:1px dashed;
+    line-height:1.45;
+  }
+  .found b{font-weight:700}
+
+  .neutral{background:var(--neutral-bg);border-color:var(--neutral-bd)}
+  .neutral .t{color:var(--neutral-tx)} .neutral .tool{color:var(--neutral-tx)}
+  .blue{background:var(--blue-bg);border-color:var(--blue-bd)}
+  .blue .t{color:var(--blue-tx)} .blue .tool{color:var(--blue-tx)} .blue .found{border-color:var(--blue-bd);color:var(--blue-tx)}
+  .teal{background:var(--teal-bg);border-color:var(--teal-bd)}
+  .teal .t{color:var(--teal-tx)} .teal .tool{color:var(--teal-tx)} .teal .found{border-color:var(--teal-bd);color:var(--teal-tx)}
+  .purple{background:var(--purple-bg);border-color:var(--purple-bd)}
+  .purple .t{color:var(--purple-tx)} .purple .tool{color:var(--purple-tx)} .purple .found{border-color:var(--purple-bd);color:var(--purple-tx)}
+  .green{background:var(--green-bg);border-color:var(--green-bd)}
+  .green .t{color:var(--green-tx)} .green .tool{color:var(--green-tx)} .green .found{border-color:var(--green-bd);color:var(--green-tx)}
+  .red{background:var(--red-bg);border-color:var(--red-bd)}
+  .red .t{color:var(--red-tx)} .red .tool{color:var(--red-tx)} .red .found{border-color:var(--red-bd);color:var(--red-tx)}
+  .orange{background:var(--orange-bg);border-color:var(--orange-bd)}
+  .orange .t{color:var(--orange-tx)} .orange .tool{color:var(--orange-tx)} .orange .found{border-color:var(--orange-bd);color:var(--orange-tx)}
+
+  .arrow{height:30px;width:430px;display:flex;justify-content:center;align-items:center}
+  .arrow svg{height:30px}
+</style>
+</head>
+<body>
+<div class="canvas">
+  <h1>scRNA Breast Cancer Atlas — Analysis Workflow</h1>
+  <div class="sub">Single-sample GEO dataset (GSE161529) · Scanpy ecosystem · epithelial tumor-state discovery</div>
+
+  <!-- INPUT -->
+  <div class="row">
+    <div class="stage">Input</div>
+    <div class="cell">
+      <div class="box neutral">
+        <div class="t">GEO Dataset · GSE161529</div>
+        <div class="d">Single-sample breast cancer scRNA-seq</div>
+        <div class="tool">10X Genomics raw matrices</div>
+      </div>
+      <div class="arrow"><svg viewBox="0 0 10 30"><line x1="5" y1="0" x2="5" y2="24" stroke="#9aa3af" stroke-width="1.4"/><path d="M5 30 L1 22 L9 22 Z" fill="#9aa3af"/></svg></div>
+    </div>
+  </div>
+
+  <!-- QC -->
+  <div class="row">
+    <div class="stage">Quality Control</div>
+    <div class="cell">
+      <div class="box blue">
+        <div class="t">Quality Control</div>
+        <div class="d">Doublet removal · low-quality filtering · mito filtering</div>
+        <div class="tool">Scanpy · Scrublet</div>
+        <div class="found"><b>Found:</b> clean single-cell population after removing multiplets and damaged cells</div>
+      </div>
+      <div class="arrow"><svg viewBox="0 0 10 30"><line x1="5" y1="0" x2="5" y2="24" stroke="#9aa3af" stroke-width="1.4"/><path d="M5 30 L1 22 L9 22 Z" fill="#9aa3af"/></svg></div>
+    </div>
+  </div>
+
+  <!-- NORMALIZATION -->
+  <div class="row">
+    <div class="stage">Normalization</div>
+    <div class="cell">
+      <div class="box teal">
+        <div class="t">Normalization + HVG Selection</div>
+        <div class="d">Log-normalization · highly variable gene selection</div>
+        <div class="tool">Scanpy</div>
+      </div>
+      <div class="arrow"><svg viewBox="0 0 10 30"><line x1="5" y1="0" x2="5" y2="24" stroke="#9aa3af" stroke-width="1.4"/><path d="M5 30 L1 22 L9 22 Z" fill="#9aa3af"/></svg></div>
+    </div>
+  </div>
+
+  <!-- INTEGRATION -->
+  <div class="row">
+    <div class="stage">Integration</div>
+    <div class="cell">
+      <div class="box purple">
+        <div class="t">Dataset Integration</div>
+        <div class="d">Batch correction across samples</div>
+        <div class="tool">BBKNN · Scanpy</div>
+      </div>
+      <div class="arrow"><svg viewBox="0 0 10 30"><line x1="5" y1="0" x2="5" y2="24" stroke="#9aa3af" stroke-width="1.4"/><path d="M5 30 L1 22 L9 22 Z" fill="#9aa3af"/></svg></div>
+    </div>
+  </div>
+
+  <!-- CLUSTERING -->
+  <div class="row">
+    <div class="stage">Clustering</div>
+    <div class="cell">
+      <div class="box blue">
+        <div class="t">UMAP + Leiden Clustering</div>
+        <div class="d">Dimensionality reduction · unsupervised cell grouping</div>
+        <div class="tool">Scanpy</div>
+      </div>
+      <div class="arrow"><svg viewBox="0 0 10 30"><line x1="5" y1="0" x2="5" y2="24" stroke="#9aa3af" stroke-width="1.4"/><path d="M5 30 L1 22 L9 22 Z" fill="#9aa3af"/></svg></div>
+    </div>
+  </div>
+
+  <!-- ANNOTATION -->
+  <div class="row">
+    <div class="stage">Annotation</div>
+    <div class="cell">
+      <div class="box green">
+        <div class="t">Cell Type Annotation</div>
+        <div class="d">Canonical marker genes · manual validation</div>
+        <div class="tool">Marker-gene scoring</div>
+        <div class="found"><b>Found 7 lineages:</b> epithelial · T cells · B cells · NK cells · macrophages · fibroblasts · endothelial</div>
+      </div>
+      <div class="arrow"><svg viewBox="0 0 10 30"><line x1="5" y1="0" x2="5" y2="24" stroke="#9aa3af" stroke-width="1.4"/><path d="M5 30 L1 22 L9 22 Z" fill="#9aa3af"/></svg></div>
+    </div>
+  </div>
+
+  <!-- TUMOR FOCUS -->
+  <div class="row">
+    <div class="stage">Tumor Analysis</div>
+    <div class="cell">
+      <div class="box red">
+        <div class="t">Epithelial Extraction + Re-clustering</div>
+        <div class="d">Tumor-focused subset · tumor-state discovery</div>
+        <div class="tool">Scanpy subset + Leiden</div>
+      </div>
+      <div class="arrow"><svg viewBox="0 0 10 30"><line x1="5" y1="0" x2="5" y2="24" stroke="#9aa3af" stroke-width="1.4"/><path d="M5 30 L1 22 L9 22 Z" fill="#9aa3af"/></svg></div>
+    </div>
+  </div>
+
+  <!-- DE -->
+  <div class="row">
+    <div class="stage">Differential Expression</div>
+    <div class="cell">
+      <div class="box red">
+        <div class="t">Differential Expression + State ID</div>
+        <div class="d">Pairwise DE between epithelial states</div>
+        <div class="tool">scanpy.tl.rank_genes_groups</div>
+        <div class="found"><b>Found 4 tumor states:</b> HER2-enriched · ER-enriched · TNBC-enriched · Normal-enriched</div>
+      </div>
+      <div class="arrow"><svg viewBox="0 0 10 30"><line x1="5" y1="0" x2="5" y2="24" stroke="#9aa3af" stroke-width="1.4"/><path d="M5 30 L1 22 L9 22 Z" fill="#9aa3af"/></svg></div>
+    </div>
+  </div>
+
+  <!-- VALIDATION -->
+  <div class="row">
+    <div class="stage">Validation</div>
+    <div class="cell">
+      <div class="box orange">
+        <div class="t">Biological Validation</div>
+        <div class="d">Marker genes · subtype composition · pathway enrichment</div>
+        <div class="tool">Enrichment analysis</div>
+      </div>
+      <div class="arrow"><svg viewBox="0 0 10 30"><line x1="5" y1="0" x2="5" y2="24" stroke="#9aa3af" stroke-width="1.4"/><path d="M5 30 L1 22 L9 22 Z" fill="#9aa3af"/></svg></div>
+    </div>
+  </div>
+
+  <!-- FINDINGS -->
+  <div class="row">
+    <div class="stage">Final Findings</div>
+    <div class="cell">
+      <div class="box green">
+        <div class="t">Final Findings</div>
+        <div class="d">Distinct epithelial tumor states · subtype-specific programs · clear cancer vs normal separation</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
