@@ -1,3 +1,6 @@
+
+<img width="1582" height="587" alt="image" src="https://github.com/user-attachments/assets/15ee3a0b-4548-40b5-ab2b-914cd76d4852" />
+
 # scRNA_BreastCancer_Atlas
 
 Integrated single-cell RNA-seq analysis of human breast cancer samples from normal breast tissue, BRCA1 preneoplastic tissue, ER-positive breast cancer, HER2-positive breast cancer, triple-negative breast cancer (TNBC), and metastatic ER-positive disease. The project builds a reproducible Python/Scanpy workflow for quality control, doublet filtering, cell-type annotation, integrated atlas construction, epithelial tumor-state discovery, differential expression, pathway analysis, and biological validation.
