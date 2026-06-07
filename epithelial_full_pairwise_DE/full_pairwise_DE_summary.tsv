@@ -1,7 +1,0 @@
-comparison	cells_total	group_cells	reference_cells	significant_up	significant_down	output_file
-TNBC_vs_Normal	19314	3555	15759	2	0	results/epithelial_full_pairwise_DE/TNBC_vs_Normal_DE.tsv
-ER_vs_Normal	32506	16747	15759	1	1	results/epithelial_full_pairwise_DE/ER_vs_Normal_DE.tsv
-HER2_vs_Normal	19493	3734	15759	1	2	results/epithelial_full_pairwise_DE/HER2_vs_Normal_DE.tsv
-TNBC_vs_ER	20302	3555	16747	2	1	results/epithelial_full_pairwise_DE/TNBC_vs_ER_DE.tsv
-HER2_vs_ER	20481	3734	16747	7	1	results/epithelial_full_pairwise_DE/HER2_vs_ER_DE.tsv
-mER_vs_ER	18807	2060	16747	4	0	results/epithelial_full_pairwise_DE/mER_vs_ER_DE.tsv
